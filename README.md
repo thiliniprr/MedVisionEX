@@ -1,9 +1,5 @@
 # MedVisionEX
 
-The repo is portable: all paths resolve relative to the repo root (see
-`paths.py`) and are overridable by environment variables, so a fresh clone runs
-without editing any absolute paths.
-
 ```
 medvisionex/
 ├── paths.py                  # relative-path resolver (repo root + env overrides)
@@ -24,34 +20,8 @@ medvisionex/
 │
 │   # retrieval, QA, configs, eval (root, unchanged)
 ├── config*.py, run_*.py, train_genqa.py, evaluate_*.py, ...
-└── Dockerfile, docker-compose.yml, requirements-app.txt, README.md
+
 ```
-
-## Path portability (done)
-
-`paths.py` anchors everything to the repo root. Defaults, all overridable:
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `HF_HOME` | `<repo>/.hf_cache` | HuggingFace model/dataset cache |
-| `MEDVQA_DATA` | `<repo>/data` | dataset root |
-| `MEDVQA_IMAGES` | `<data>/Images` | local image dir |
-| `MEDVQA_OUTPUTS` | `<repo>/outputs` | checkpoints / indices / results |
-
-Importing any config sets `HF_HOME` to the repo-local cache unless you've
-already exported one, so HuggingFace caches inside the repo by default.
-
-## Migration status
-
-- **Relative paths (incl. HuggingFace):** done — no absolute paths remain.
-- **No AI/tool identifiers in the code:** confirmed — none present.
-- **`knowledge_graph/` package:** done and import-verified.
-- **`caption_generator/` package:** scaffolded. The captioner currently lives in
-  `evaluate_pipeline.py` (`_make_threshold_generator_class`) + `config.py`
-  (`PipelineConfig`); extracting it cleanly is a follow-up that refactors
-  `evaluate_pipeline.py`.
-- **Per-file comment cleanup:** comments in touched files are purposeful; a
-  pass over the remaining root modules can be done incrementally.
 
 ## Run from a fresh clone
 
